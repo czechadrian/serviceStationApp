@@ -1,4 +1,4 @@
-package com.servicecompany.agh;
+package com.servicecompany.agh.employees;
 
 
 public interface Employee {
