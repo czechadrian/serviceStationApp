@@ -1,17 +1,17 @@
 package com.servicecompany.agh.employees;
 
-import com.servicecompany.agh.calendars.WorkCalendarLogistician;
+import com.servicecompany.agh.calendars.WorkCalendar;
 
-public class Logistician extends AbstractEmployee{
+public class Logistician extends AbstractEmployee {
 
-    private WorkCalendarLogistician workCalendarLogistician;
+    private WorkCalendar<Logistician> workCalendar;
 
-    public Logistician(String name, String surname, Integer experience, Integer experienceInCompany) {
+    public Logistician(String name, String surname, Integer experience, Integer experienceInCompany, WorkCalendar<Logistician> workCalendarLogistician) {
         super(name, surname, experience, experienceInCompany);
-        this.workCalendarLogistician = new WorkCalendarLogistician();
+        this.workCalendar = workCalendarLogistician;
     }
 
-    public WorkCalendarLogistician getWorkCalendarLogistician() {
-        return workCalendarLogistician;
+    public WorkCalendar<Logistician> getWorkCalendar() {
+        return workCalendar;
     }
 }

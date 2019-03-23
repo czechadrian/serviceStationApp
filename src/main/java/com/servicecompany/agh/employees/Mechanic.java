@@ -1,17 +1,17 @@
 package com.servicecompany.agh.employees;
 
-import com.servicecompany.agh.calendars.WorkCalendarMechanic;
+import com.servicecompany.agh.calendars.WorkCalendar;
 
-public class Mechanic extends AbstractEmployee{
+public class Mechanic extends AbstractEmployee {
 
-    private WorkCalendarMechanic workCalendarMechanic;
+    private WorkCalendar<Mechanic> workCalendar;
 
-    public Mechanic(String name, String surname, Integer experience, Integer experienceInCompany, WorkCalendarMechanic workCalendarMechanic) {
+    public Mechanic(String name, String surname, Integer experience, Integer experienceInCompany, WorkCalendar<Mechanic> workCalendarMechanic) {
         super(name, surname, experience, experienceInCompany);
-        this.workCalendarMechanic = new WorkCalendarMechanic();
+        this.workCalendar = workCalendarMechanic;
     }
 
-    public WorkCalendarMechanic getWorkCalendarMechanic() {
-        return workCalendarMechanic;
+    public WorkCalendar<Mechanic> getWorkCalendar() {
+        return workCalendar;
     }
 }

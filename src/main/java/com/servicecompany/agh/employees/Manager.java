@@ -1,17 +1,17 @@
 package com.servicecompany.agh.employees;
 
-import com.servicecompany.agh.calendars.WorkCalendarManager;
+import com.servicecompany.agh.calendars.WorkCalendar;
 
 public class Manager extends AbstractEmployee {
 
-    private WorkCalendarManager workCalendarManager;
+    private WorkCalendar<Manager> workCalendar;
 
-    public Manager(String name, String surname, Integer experience, Integer experienceInCompany) {
+    public Manager(String name, String surname, Integer experience, Integer experienceInCompany, WorkCalendar<Manager> workCalendarManager) {
         super(name, surname, experience, experienceInCompany);
-        this.workCalendarManager = new WorkCalendarManager();
+        this.workCalendar = workCalendarManager;
     }
 
-    public WorkCalendarManager getWorkCalendarManager() {
-        return workCalendarManager;
+    public WorkCalendar<Manager> getWorkCalendar() {
+        return workCalendar;
     }
 }

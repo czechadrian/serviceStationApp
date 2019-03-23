@@ -15,7 +15,7 @@ public class Car {
         this.brand = brand;
         this.owner = owner;
         this.registrationNumber = registrationNumber;
-        this. flawsHistory = new ArrayList<>();
+        this.flawsHistory = new ArrayList<>();
     }
 
     public String getModel() {
