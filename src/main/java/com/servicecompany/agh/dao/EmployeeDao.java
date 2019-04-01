@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface EmployeeDao {
 
-   // Collection<Employee> getAllStudents();
+    Collection<AbstractEmployee> getAllEmployees();
 
     AbstractEmployee getEmployeeById(int id);
 

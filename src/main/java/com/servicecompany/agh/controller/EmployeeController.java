@@ -9,12 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/users")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Collection<AbstractEmployee> getAllEmployees(){
+        return employeeService.getAllEmployees();
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public AbstractEmployee getEmployeeById(@PathVariable("id") int id){

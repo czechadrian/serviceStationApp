@@ -6,6 +6,9 @@ public interface Employee {
     int getId();
     void setId(int id);
 
+    String getRole();
+    void setRole(String role);
+
     String getName();
     void setName(String name);
 

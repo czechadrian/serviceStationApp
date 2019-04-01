@@ -3,6 +3,7 @@ package com.servicecompany.agh.employees;
 public class AbstractEmployee implements Employee{
 
     private Integer id;
+    private String role;
     private String name;
     private String surname;
     private Integer experience;
@@ -21,6 +22,15 @@ public class AbstractEmployee implements Employee{
     public int getId() { return id; }
     @Override
     public void setId(int id) { this.id = id; }
+
+    @Override
+    public String getRole() {
+        return role;
+    }
+    @Override
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     @Override
     public String getName() {

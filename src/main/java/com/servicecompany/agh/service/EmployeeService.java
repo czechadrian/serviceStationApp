@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class EmployeeService {
 
@@ -14,11 +16,9 @@ public class EmployeeService {
     @Qualifier("mysql")
     private EmployeeDao employeeDao;
 
-    /*
-    public Collection<AbstractEmployee> getAllStudents(){
-        return this.employeeDao.getAllStudents();
+    public Collection<AbstractEmployee> getAllEmployees(){
+        return this.employeeDao.getAllEmployees();
     }
-*/
 
     public AbstractEmployee getEmployeeById(int id){
         return this.employeeDao.getEmployeeById(id);
