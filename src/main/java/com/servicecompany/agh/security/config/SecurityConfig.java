@@ -1,5 +1,7 @@
 package com.servicecompany.agh.security.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final Logger log = LogManager.getLogger(SecurityConfig.class);
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -36,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         final String sqlPassword = "SELECT password FROM USER WHERE USER.id=?";
         final String sqlRole = "SELECT role FROM USER JOIN ROLE ON USER.id_role=ROLE.id WHERE USER.id=?";
 
+        log.info("searching users in table user");
         for( int i=1; i <= count; i++ ) {
 
             String login = jdbcTemplate.queryForObject(sqlLogin, new Object[] {i}, String.class);
@@ -45,14 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)
                     .withUser(login).password(passwordEncoder.encode(password)).roles(role);
         }
-        /*
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
 
-                .withUser("manager").password(passwordEncoder.encode("password")).roles("MANAGER")
-                .and()
-                .withUser("mechanic").password(passwordEncoder.encode("password")).roles("MECHANIC");
-                */
 
     }
 
