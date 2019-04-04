@@ -1,10 +1,12 @@
 package com.servicecompany.agh.security.config;
 
+import com.servicecompany.agh.authentication.UrlAuthenticationSuccessHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -25,8 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-
 
 
 
@@ -47,11 +48,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             String password = jdbcTemplate.queryForObject(sqlPassword, new Object[] {i}, String.class);
             String role = jdbcTemplate.queryForObject(sqlRole, new Object[] {i}, String.class).toUpperCase();
 
+
             auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)
                     .withUser(login).password(passwordEncoder.encode(password)).roles(role);
         }
 
 
+    }
+
+
+    @Bean("authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new UrlAuthenticationSuccessHandler();
     }
 
     @Bean
@@ -68,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .antMatchers("/mechanic/**").hasRole("MECHANIC")
                 .antMatchers("/**").hasAnyRole("ACCOUNTANT", "LOGISTICIAN","MANAGER","MECHANIC")
-                .and().formLogin()
+                .and().formLogin().loginProcessingUrl("/login").successHandler(myAuthenticationSuccessHandler())
                 .and().logout().logoutSuccessUrl("/login").permitAll()
                 .and().csrf().disable();
     }
