@@ -1,16 +1,11 @@
 package com.servicecompany.agh.calendars;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 
+@Data
 public class WorkCalendar<T> {
-
     private ArrayList<String> workCalendar = new ArrayList<>();
 
-    public ArrayList<String> getWorkCalendar() {
-        return workCalendar;
-    }
-
-    public void setWorkCalendar(ArrayList<String> workCalendar) {
-        this.workCalendar = workCalendar;
-    }
 }

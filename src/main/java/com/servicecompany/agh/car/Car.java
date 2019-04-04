@@ -1,8 +1,14 @@
 package com.servicecompany.agh.car;
 
-import java.util.ArrayList;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Car {
     private String model;
     private String brand;
@@ -10,31 +16,4 @@ public class Car {
     private String registrationNumber;
     private List<String> flawsHistory;
 
-    public Car(String model, String brand, String owner, String registrationNumber) {
-        this.model = model;
-        this.brand = brand;
-        this.owner = owner;
-        this.registrationNumber = registrationNumber;
-        this.flawsHistory = new ArrayList<>();
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public String getRegistrationNumber() {
-        return registrationNumber;
-    }
-
-    public List<String> getFlawsHistory() {
-        return flawsHistory;
-    }
 }
