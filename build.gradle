@@ -20,7 +20,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-config'
     implementation 'org.springframework.security:spring-security-web'
     //implementation 'org.springframework.cloud:spring-cloud-starter-aws-jdbc'
-    compileOnly 'org.projectlombok:lombok'
+    compile 'org.projectlombok:lombok'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.1.4.RELEASE'
     
     compile("org.springframework.boot:spring-boot-starter-web")
     // Use MySQL Connector-J
