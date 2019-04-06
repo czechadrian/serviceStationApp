@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
-@Repository("mysql")
+@Repository("mysqlEmployee")
 public class MySqlEmployeeImpl implements EmployeeDao {
 
     @Autowired
