@@ -11,6 +11,8 @@ public interface EmployeeDao {
 
     AbstractEmployee getEmployeeById(int id);
 
+    AbstractEmployee getEmployeeByUsername(String username);
+
     /*
     void removeEmployeeById(int id);
 

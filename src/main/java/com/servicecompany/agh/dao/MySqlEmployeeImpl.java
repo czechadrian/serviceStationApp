@@ -54,6 +54,12 @@ public class MySqlEmployeeImpl implements EmployeeDao {
 
     }
 
-
-
+    @Override
+    public AbstractEmployee getEmployeeByUsername(String username) {
+        final String sql = "SELECT USER.id,role, name, surname, experience, experienceInCompany " +
+                "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
+                "WHERE USER.login = ?";
+        AbstractEmployee abstractEmployee = jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(),username);
+        return abstractEmployee;
+    }
 }
