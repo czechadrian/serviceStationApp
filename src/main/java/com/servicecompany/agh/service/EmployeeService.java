@@ -24,6 +24,8 @@ public class EmployeeService {
         return this.employeeDao.getEmployeeById(id);
     }
 
+    public AbstractEmployee getEmployeeByUsername(String username) { return this.employeeDao.getEmployeeByUsername(username);}
+
 /*
 
     public void removeStudentById(int id) {
