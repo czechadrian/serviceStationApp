@@ -1,6 +1,7 @@
 package com.servicecompany.agh.security.config;
 
 import com.servicecompany.agh.authentication.UrlAuthenticationSuccessHandler;
+import com.servicecompany.agh.handlers.CustomAccessDeniedHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -56,6 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
 
     @Bean("authenticationManager")
     @Override
@@ -84,6 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").hasAnyRole("ACCOUNTANT", "LOGISTICIAN","MANAGER","MECHANIC")
                 .and().formLogin().loginProcessingUrl("/login").successHandler(myAuthenticationSuccessHandler())
                 .and().logout().logoutSuccessUrl("/login").permitAll()
+                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .and().csrf().disable();
     }
 
