@@ -13,7 +13,7 @@ import java.util.Collection;
 public class EmployeeService {
 
     @Autowired
-    @Qualifier("mysql")
+    @Qualifier("mysqlEmployee")
     private EmployeeDao employeeDao;
 
     public Collection<AbstractEmployee> getAllEmployees(){
