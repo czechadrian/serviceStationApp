@@ -27,7 +27,7 @@ public class OwnerController {
         return ownerService.getAllOwners();
     }
 
-    @GetMapping
+    @GetMapping(value = "/{id}")
     public Owner getCarById(@PathVariable("id") int id) {
         return ownerService.getOwnerById(id);
     }
