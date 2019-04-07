@@ -11,5 +11,9 @@ public interface CarDao {
 
     Car getCarById(int id);
 
+    void deleteCarById(int id);
 
+    void updateCarById(Car car,int id);
+
+    void insertCarToDb(Car car);
 }

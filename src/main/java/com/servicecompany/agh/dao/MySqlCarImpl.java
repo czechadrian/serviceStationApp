@@ -53,6 +53,29 @@ public class MySqlCarImpl implements CarDao {
 
     }
 
+    @Override
+    public void deleteCarById(int id) {
+        final String sql = "DELETE FROM CAR WHERE id = ?";
+        jdbcTemplate.update(sql,id);
+    }
 
+    @Override
+    public void updateCarById(Car car,int id) {
+        final String sql = "UPDATE CAR SET id_owner = ?,model=?,brand=?,registration_number=? WHERE id = ?";
+        final String id_owner = car.getOwner();
+        final String model = car.getModel();
+        final String brand = car.getBrand();
+        final String registration_number = car.getRegistrationNumber();
+        jdbcTemplate.update(sql,new Object[] {id_owner,model,brand,registration_number,id});
+    }
 
+    @Override
+    public void insertCarToDb(Car car) {
+        final String sql = "INSERT INTO CAR (id_owner,model,brand,registration_number) VALUES (?,?,?,?)";
+        final String id_owner = car.getOwner();
+        final String model = car.getModel();
+        final String brand = car.getBrand();
+        final String registration_number = car.getRegistrationNumber();
+        jdbcTemplate.update(sql,new Object[] {id_owner,model,brand,registration_number});
+    }
 }
