@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping
+@RequestMapping(value = "/cars")
 public class CarController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(CarController.class);
@@ -20,12 +20,12 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @GetMapping(value = "/cars")
+    @GetMapping
     public Collection<Car> cars() {
         return carService.getAllCars();
     }
 
-    @GetMapping(value = "/cars/{id}")
+    @GetMapping(value = "/{id}")
     public Car getCarById(@PathVariable("id") int id) {
         return carService.getCarById(id);
     }
