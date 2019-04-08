@@ -3,11 +3,10 @@ package com.servicecompany.agh.controller;
 
 import com.servicecompany.agh.employees.AbstractEmployee;
 import com.servicecompany.agh.service.EmployeeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -15,15 +14,17 @@ import java.util.Collection;
 @RequestMapping("/users")
 public class EmployeeController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
+
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Collection<AbstractEmployee> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public AbstractEmployee getEmployeeById(@PathVariable("id") int id){
         return employeeService.getEmployeeById(id);
     }

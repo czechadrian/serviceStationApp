@@ -24,4 +24,9 @@ public class CarService {
         return this.carDao.getCarById(id);
     }
 
+    public void deleteCarById(int id ) { this.carDao.deleteCarById(id);}
+
+    public void updateCarById(Car car,int id){ this.carDao.updateCarById(car,id);}
+
+    public void insertCarToDb(Car car){this.carDao.insertCarToDb(car);}
 }
