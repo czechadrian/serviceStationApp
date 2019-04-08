@@ -1,32 +1,25 @@
 package com.servicecompany.agh.jdbc.dao
 
-import com.servicecompany.agh.employees.Mechanic
-
-import static com.servicecompany.agh.jdbc.queries.helpers.EmployeeResultSetMockValues.* //TODO save this import
-
 import com.servicecompany.agh.employees.AbstractEmployee
 import spock.lang.Specification
 import spock.lang.Subject
-
 import java.sql.ResultSet
 
+import static com.servicecompany.agh.jdbc.queries.helpers.EmployeeResultSetMockValues.*
 import static com.servicecompany.agh.dao.MySqlEmployeeImpl.EmployeeRowMapper
 
-//TODO save this import
 
 class EmployeeRowMapperTest extends Specification {
 
     @Subject
     EmployeeRowMapper rowMapper = new EmployeeRowMapper()
 
-//TODO (2) write asserts in verifyResult function , complete setup and write proper instruction in given/when/then.
-    //TODO (3) after that you can prepare tests for methods in MySqlEmployeeImpl
-    def "Should create Employee"() {
-        given: "given"
+    def "Create an Employee"() {
+        given: "Set values"
         def resultSet = setupResultSet()
-        when: "when"
+        when: "Using mapRow method"
         def employeeEntity = (AbstractEmployee) rowMapper.mapRow(resultSet, 1)
-        then: "then"
+        then: "Asserts"
         verifyResult(employeeEntity)
     }
 
@@ -38,7 +31,6 @@ class EmployeeRowMapperTest extends Specification {
         resultSet.getString("surname") >> EMPLOYEE_SURNAME
         resultSet.getInt("experience") >> EMPLOYEE_EXPERIENCE
         resultSet.getInt("experienceInCompany") >> EMPLOYEE_EXEPERIENCE_IN_COMPANY
-
 
         return resultSet
     }
