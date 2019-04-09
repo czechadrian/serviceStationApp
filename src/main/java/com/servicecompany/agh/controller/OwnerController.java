@@ -6,10 +6,8 @@ import com.servicecompany.agh.service.OwnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -30,6 +28,21 @@ public class OwnerController {
     @GetMapping(value = "/{id}")
     public Owner getCarById(@PathVariable("id") int id) {
         return ownerService.getOwnerById(id);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteCarById(@PathVariable("id") int id){
+        ownerService.deleteOwnerById(id);
+    }
+
+    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody Owner owner, @PathVariable("id") int id){
+        ownerService.updateOwnerById(owner,id);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void insertCar(@RequestBody Owner owner){
+        ownerService.insertOwnerToDb(owner);
     }
 
 }

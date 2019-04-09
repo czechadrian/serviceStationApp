@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/cars")
+@RequestMapping("/cars")
 public class CarController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(CarController.class);
@@ -36,7 +36,7 @@ public class CarController {
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Car car,int id){
+    public void update(@RequestBody Car car, @PathVariable("id") int id){
         carService.updateCarById(car,id);
     }
 

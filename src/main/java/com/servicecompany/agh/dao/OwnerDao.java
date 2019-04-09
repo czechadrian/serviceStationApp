@@ -9,4 +9,10 @@ public interface OwnerDao {
     Collection<Owner> getAllOwners();
 
     Owner getOwnerById(int id);
+
+    void deleteOwnerById(int id);
+
+    void updateOwnerById(Owner owner,int id);
+
+    void insertOwnerToDb(Owner owner);
 }
