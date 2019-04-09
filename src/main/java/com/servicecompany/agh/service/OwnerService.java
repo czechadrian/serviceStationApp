@@ -24,4 +24,9 @@ public class OwnerService {
         return this.ownerDao.getOwnerById(id);
     }
 
+    public void deleteOwnerById(int id ) { this.ownerDao.deleteOwnerById(id);}
+
+    public void updateOwnerById(Owner owner,int id){ this.ownerDao.updateOwnerById(owner,id);}
+
+    public void insertOwnerToDb(Owner owner){this.ownerDao.insertOwnerToDb(owner);}
 }

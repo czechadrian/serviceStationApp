@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Car {
     private Integer id;
+    private Integer id_owner;
     private String model;
     private String brand;
     private String owner;
