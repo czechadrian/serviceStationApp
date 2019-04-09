@@ -9,15 +9,22 @@ public interface EmployeeDao {
 
     Collection<AbstractEmployee> getAllEmployees();
 
+    Collection<AbstractEmployee> getAllMechanics();
+
+    Collection<AbstractEmployee> getAllLogistician();
+
+    Collection<AbstractEmployee> getAllAccountants();
+
+    Collection<AbstractEmployee> getAllManagers();
+
     AbstractEmployee getEmployeeById(int id);
 
     AbstractEmployee getEmployeeByUsername(String username);
 
-    /*
-    void removeEmployeeById(int id);
+    void deleteEmployeeById(int id);
 
-    void updateEmployee(Employee student);
+    void insertEmployeeToDb(AbstractEmployee abstractEmployee);
 
-    void insertEmployeeToDb(Employee student);
-    */
+    void updateEmployeeById(AbstractEmployee abstractEmployee, int id);
+
 }

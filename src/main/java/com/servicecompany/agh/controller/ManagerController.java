@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.Collection;
 
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("manager")
 public class ManagerController {
 
 
@@ -21,8 +22,9 @@ public class ManagerController {
     @Autowired
     private EmployeeService employeeService;
 
+
     @GetMapping
-    public AbstractEmployee getEmployeeByUsername(Principal principal) {
-        return employeeService.getEmployeeByUsername(principal.getName());
+    public Collection<AbstractEmployee> getAllManagers() {
+        return employeeService.getAllManagers();
     }
 }
