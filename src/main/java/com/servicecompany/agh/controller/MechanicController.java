@@ -1,5 +1,6 @@
 package com.servicecompany.agh.controller;
 
+
 import com.servicecompany.agh.employees.AbstractEmployee;
 import com.servicecompany.agh.service.EmployeeService;
 import org.slf4j.Logger;
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
+import java.util.Collection;
+
 
 @RestController
-@RequestMapping("/mechanic")
+@RequestMapping("mechanic")
 
 public class MechanicController {
 
@@ -22,8 +24,10 @@ public class MechanicController {
     @Autowired
     private EmployeeService employeeService;
 
+
     @GetMapping
-    public AbstractEmployee getEmployeeByUsername(Principal principal) {
-        return employeeService.getEmployeeByUsername(principal.getName());
+    public Collection<AbstractEmployee> getAllMechanics() {
+        return employeeService.getAllMechanics();
     }
+
 }
