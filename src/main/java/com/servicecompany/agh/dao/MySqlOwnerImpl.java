@@ -50,5 +50,29 @@ public class MySqlOwnerImpl implements OwnerDao {
 
     }
 
+    @Override
+    public void deleteOwnerById(int id) {
+        final String sql = "DELETE FROM OWNER WHERE id = ?";
+        jdbcTemplate.update(sql,id);
+    }
+
+    @Override
+    public void updateOwnerById(Owner owner,int id) {
+        final String sql = "UPDATE OWNER SET name=?,surname=?,phone_number=? WHERE id = ?";
+        final String name = owner.getName();
+        final String surname = owner.getSurname();
+        final String phoneNumber = owner.getPhoneNumber();
+        jdbcTemplate.update(sql,new Object[] {name, surname, phoneNumber,id});
+    }
+
+    @Override
+    public void insertOwnerToDb(Owner owner) {
+        final String sql = "INSERT INTO OWNER (name, surname, phone_number) VALUES (?,?,?)";
+        final String name = owner.getName();
+        final String surname = owner.getSurname();
+        final String phoneNumber = owner.getPhoneNumber();
+        jdbcTemplate.update(sql,new Object[] {name, surname, phoneNumber});
+    }
+
 
 }

@@ -36,7 +36,7 @@ public class CarController {
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Car car,int id){
+    public void update(@RequestBody Car car, @PathVariable("id") int id){
         carService.updateCarById(car,id);
     }
 

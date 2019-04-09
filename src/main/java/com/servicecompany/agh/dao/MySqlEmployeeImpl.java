@@ -19,7 +19,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private static class EmployeeRowMapper implements RowMapper<AbstractEmployee> {
+    public static class EmployeeRowMapper implements RowMapper<AbstractEmployee> {
 
         @Override
         public AbstractEmployee mapRow(ResultSet resultSet, int i) throws SQLException {
