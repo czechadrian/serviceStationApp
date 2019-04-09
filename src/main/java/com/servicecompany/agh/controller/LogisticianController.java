@@ -13,7 +13,7 @@ import java.security.Principal;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("logistician")
+@RequestMapping("/logistician")
 public class LogisticianController {
 
 

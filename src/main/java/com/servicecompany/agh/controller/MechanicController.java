@@ -14,7 +14,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("mechanic")
+@RequestMapping("/mechanic")
 
 public class MechanicController {
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("cars")
+@RequestMapping("/cars")
 public class CarController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(CarController.class);
