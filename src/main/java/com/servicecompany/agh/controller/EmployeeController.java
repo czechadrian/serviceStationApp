@@ -25,12 +25,12 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/byId/{id}")
     public AbstractEmployee getEmployeeById(@PathVariable("id") int id) {
         return employeeService.getEmployeeById(id);
     }
 
-    @GetMapping(value = "/login/{login}")
+    @GetMapping(value = "/byLogin/{login}")
     public AbstractEmployee getEmployeeByLogin(@PathVariable("login") String login) {
         return employeeService.getEmployeeByLogin(login);
     }
