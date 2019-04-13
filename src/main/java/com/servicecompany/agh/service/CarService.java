@@ -24,6 +24,26 @@ public class CarService {
         return this.carDao.getCarById(id);
     }
 
+    public Collection<Car> getCarByOwnerSurname(String surname){
+        return this.carDao.getCarByOwnerSurname(surname);
+    }
+
+    public Collection<Car> getCarByOwnerPhoneNumber(String phoneNumber){
+        return this.carDao.getCarByOwnerPhoneNumber(phoneNumber);
+    }
+
+    public Car getCarByRegistrationNumber(String registrationNumber){
+        return this.carDao.getCarByRegistrationNumber(registrationNumber);
+    }
+
+    public Collection<Car> getCarByBrand(String brand){
+        return this.carDao.getCarByBrand(brand);
+    }
+
+    public Collection<Car> getCarByModel(String model){
+        return this.carDao.getCarByModel(model);
+    }
+
     public void deleteCarById(int id ) { this.carDao.deleteCarById(id);}
 
     public void updateCarById(Car car,int id){ this.carDao.updateCarById(car,id);}

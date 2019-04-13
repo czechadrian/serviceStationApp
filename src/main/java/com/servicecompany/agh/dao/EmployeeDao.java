@@ -11,7 +11,7 @@ public interface EmployeeDao {
 
     Collection<AbstractEmployee> getAllMechanics();
 
-    Collection<AbstractEmployee> getAllLogistician();
+    Collection<AbstractEmployee> getAllLogisticians();
 
     Collection<AbstractEmployee> getAllAccountants();
 
@@ -19,7 +19,7 @@ public interface EmployeeDao {
 
     AbstractEmployee getEmployeeById(int id);
 
-    AbstractEmployee getEmployeeByUsername(String username);
+    AbstractEmployee getEmployeeByLogin(String login);
 
     void deleteEmployeeById(int id);
 

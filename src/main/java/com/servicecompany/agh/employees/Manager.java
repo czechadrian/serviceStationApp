@@ -15,8 +15,10 @@ public class Manager extends AbstractEmployee {
     }
 
     @Builder
-    public Manager(Integer id, String role, String name, String surname, Integer experience, Integer experienceInCompany, WorkCalendar<Manager> workCalendar) {
-        super(id, role, name, surname, experience, experienceInCompany);
+    public Manager(Integer id, Integer id_role, String role, String name, String surname,
+                       String login, String password, Integer experience, Integer experienceInCompany,
+                       WorkCalendar<Manager> workCalendar) {
+        super(id, id_role, role, name, surname, login, password, experience, experienceInCompany);
         this.workCalendar = workCalendar;
     }
 

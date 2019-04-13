@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/owners")
+@RequestMapping("/api/owners")
 public class OwnerController {
 
 
@@ -25,7 +25,7 @@ public class OwnerController {
         return ownerService.getAllOwners();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/byId/{id}")
     public Owner getCarById(@PathVariable("id") int id) {
         return ownerService.getOwnerById(id);
     }
@@ -36,12 +36,12 @@ public class OwnerController {
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Owner owner, @PathVariable("id") int id){
+    public void updateOwnerById(@RequestBody Owner owner, @PathVariable("id") int id){
         ownerService.updateOwnerById(owner,id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertCar(@RequestBody Owner owner){
+    public void insertOwnerToDb(@RequestBody Owner owner){
         ownerService.insertOwnerToDb(owner);
     }
 

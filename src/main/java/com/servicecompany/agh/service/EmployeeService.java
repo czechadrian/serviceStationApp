@@ -28,12 +28,12 @@ public class EmployeeService {
         return this.employeeDao.getEmployeeById(id);
     }
 
-    public AbstractEmployee getEmployeeByUsername(String username) {
-        return this.employeeDao.getEmployeeByUsername(username);
+    public AbstractEmployee getEmployeeByLogin(String login) {
+        return this.employeeDao.getEmployeeByLogin(login);
     }
 
-    public Collection<AbstractEmployee> getAllLogistician() {
-        return this.employeeDao.getAllLogistician();
+    public Collection<AbstractEmployee> getAllLogisticians() {
+        return this.employeeDao.getAllLogisticians();
     }
 
     public Collection<AbstractEmployee> getAllMechanics() {

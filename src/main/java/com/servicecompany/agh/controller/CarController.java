@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/cars")
+@RequestMapping("/api/cars")
 public class CarController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(CarController.class);
@@ -25,9 +25,34 @@ public class CarController {
         return carService.getAllCars();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/byId/{id}")
     public Car getCarById(@PathVariable("id") int id) {
         return carService.getCarById(id);
+    }
+
+    @GetMapping(value = "/byOwnerSurname/{surname}")
+    public Collection<Car> getCarByOwnerSurname(@PathVariable("surname") String surname) {
+        return carService.getCarByOwnerSurname(surname);
+    }
+
+    @GetMapping(value = "/byOwnerPhoneNumber/{phoneNumber}")
+    public Collection<Car> getCarByOwnerPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
+        return carService.getCarByOwnerPhoneNumber(phoneNumber);
+    }
+
+    @GetMapping(value = "/byRegistrationNumber/{registrationNumber}")
+    public Car getCarByRegistrationNumber(@PathVariable("registrationNumber") String registrationNumber) {
+        return carService.getCarByRegistrationNumber(registrationNumber);
+    }
+
+    @GetMapping(value = "/byBrand/{brand}")
+    public Collection<Car> getCarByBrand(@PathVariable("brand") String brand) {
+        return carService.getCarByBrand(brand);
+    }
+
+    @GetMapping(value = "/byModel/{model}")
+    public Collection<Car> getCarByOwnerByModel(@PathVariable("model") String model) {
+        return carService.getCarByModel(model);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -36,12 +61,12 @@ public class CarController {
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Car car, @PathVariable("id") int id){
+    public void updateCarById(@RequestBody Car car, @PathVariable("id") int id){
         carService.updateCarById(car,id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertCar(@RequestBody Car car){
+    public void insertCarToDb(@RequestBody Car car){
         carService.insertCarToDb(car);
     }
 }

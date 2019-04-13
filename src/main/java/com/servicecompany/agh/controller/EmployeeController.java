@@ -25,9 +25,14 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/byId/{id}")
     public AbstractEmployee getEmployeeById(@PathVariable("id") int id) {
         return employeeService.getEmployeeById(id);
+    }
+
+    @GetMapping(value = "/byLogin/{login}")
+    public AbstractEmployee getEmployeeByLogin(@PathVariable("login") String login) {
+        return employeeService.getEmployeeByLogin(login);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -36,13 +41,12 @@ public class EmployeeController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody AbstractEmployee abstractEmployee, int id) {
+    public void updateEmployeeById(@RequestBody AbstractEmployee abstractEmployee, @PathVariable("id") int id) {
         employeeService.updateEmployeeById(abstractEmployee, id);
     }
 
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertEmployee(@RequestBody AbstractEmployee abstractEmployee) {
+    public void insertEmployeeToDb(@RequestBody AbstractEmployee abstractEmployee) {
         employeeService.insertEmployeeToDb(abstractEmployee);
     }
 }
