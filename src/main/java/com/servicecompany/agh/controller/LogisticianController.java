@@ -24,8 +24,8 @@ public class LogisticianController {
 
 
     @GetMapping
-    public Collection<AbstractEmployee> getAllLogistician() {
-        return employeeService.getAllLogistician();
+    public Collection<AbstractEmployee> getAllLogisticians() {
+        return employeeService.getAllLogisticians();
     }
 
 }

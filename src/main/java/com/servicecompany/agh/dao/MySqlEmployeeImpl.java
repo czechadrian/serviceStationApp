@@ -56,11 +56,11 @@ public class MySqlEmployeeImpl implements EmployeeDao {
     }
 
     @Override
-    public AbstractEmployee getEmployeeByUsername(String username) {
+    public AbstractEmployee getEmployeeByLogin(String login) {
         final String sql = "SELECT USER.id,role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
                 "WHERE USER.login = ?";
-        AbstractEmployee abstractEmployee = jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), username);
+        AbstractEmployee abstractEmployee = jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), login);
         return abstractEmployee;
     }
 
@@ -75,7 +75,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
     }
 
     @Override
-    public Collection<AbstractEmployee> getAllLogistician() {
+    public Collection<AbstractEmployee> getAllLogisticians() {
         // SELECT all info about Logistician
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
@@ -95,19 +95,6 @@ public class MySqlEmployeeImpl implements EmployeeDao {
     }
 
     @Override
-    public void insertEmployeeToDb(AbstractEmployee abstractEmployee) {
-        final String sql = "INSERT INTO USER (id,role,name,surname,experience,experienceInCompany) VALUES (?,?,?,?,?,?)";
-        final int id = abstractEmployee.getId();
-        final String role = abstractEmployee.getRole();
-        final String name = abstractEmployee.getName();
-        final String surname = abstractEmployee.getSurname();
-        final int experience = abstractEmployee.getExperience();
-        final int experienceInCompany = abstractEmployee.getExperienceInCompany();
-        jdbcTemplate.update(sql, new Object[]{id, role, name, surname, experience, experienceInCompany});
-
-    }
-
-    @Override
     public Collection<AbstractEmployee> getAllAccountants() {
         // SELECT all info about Accountants
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
@@ -118,15 +105,35 @@ public class MySqlEmployeeImpl implements EmployeeDao {
     }
 
     @Override
-    public void updateEmployeeById(AbstractEmployee abstractEmployee, int id) {
-        final String sql = "UPDATE USER SET (idKeeper = ?role= ?,name = ?,surname= ?,experience = ?,experienceInCompany = ? WHERE id = ?)";
-        final int idKeeper = abstractEmployee.getId();
-        final String role = abstractEmployee.getRole();
+    public void insertEmployeeToDb(AbstractEmployee abstractEmployee) {
+        final String sql = "INSERT INTO USER " +
+                "( id_role, name, surname, login, password, experience,experienceInCompany) " +
+                "VALUES (?,?,?,?,?,?,?)";
+
+        final int id_role = abstractEmployee.getId_role();
         final String name = abstractEmployee.getName();
         final String surname = abstractEmployee.getSurname();
+        final String login = abstractEmployee.getLogin();
+        final String password = abstractEmployee.getPassword();
         final int experience = abstractEmployee.getExperience();
         final int experienceInCompany = abstractEmployee.getExperienceInCompany();
-        jdbcTemplate.update(sql, new Object[]{idKeeper, role, name, surname, experience, experienceInCompany, id});
+        jdbcTemplate.update(sql, new Object[]{ id_role, name, surname, login, password, experience, experienceInCompany});
+
+    }
+
+    @Override
+    public void updateEmployeeById(AbstractEmployee abstractEmployee, int id) {
+        final String sql = "UPDATE USER SET id_role= ?, name = ?,surname= ?, " +
+                "login = ?, password = ?, experience = ?, experienceInCompany = ? WHERE id = ?";
+        final int id_role = abstractEmployee.getId_role();
+        final String name = abstractEmployee.getName();
+        final String surname = abstractEmployee.getSurname();
+        final String login = abstractEmployee.getLogin();
+        final String password = abstractEmployee.getPassword();
+        final int experience = abstractEmployee.getExperience();
+        final int experienceInCompany = abstractEmployee.getExperienceInCompany();
+        jdbcTemplate.update(sql, new Object[]{id_role, name, surname,
+                login, password, experience, experienceInCompany, id});
     }
 
     @Override
@@ -134,6 +141,5 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String sql = "DELETE FROM USER WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
-
 
 }

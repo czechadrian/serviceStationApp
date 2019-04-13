@@ -36,12 +36,12 @@ public class CarController {
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Car car, @PathVariable("id") int id){
+    public void updateCarById(@RequestBody Car car, @PathVariable("id") int id){
         carService.updateCarById(car,id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertCar(@RequestBody Car car){
+    public void insertCarToDb(@RequestBody Car car){
         carService.insertCarToDb(car);
     }
 }
