@@ -1,19 +1,22 @@
 package com.servicecompany.agh.dao;
 
 import com.servicecompany.agh.car.Car;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 
 @Repository("mysqlCar")
 public class MySqlCarImpl implements CarDao {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(MySqlCarImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -24,96 +27,91 @@ public class MySqlCarImpl implements CarDao {
         public Car mapRow(ResultSet resultSet, int i) throws SQLException {
             Car car = new Car();
             car.setId(resultSet.getInt("id"));
-            car.setOwner(resultSet.getString("surname"));
-            car.setPhoneNumber(resultSet.getString("phone_number"));
+            car.setClient(resultSet.getString("client"));
+            car.setPhoneNumber(resultSet.getLong("phoneNumber"));
             car.setBrand(resultSet.getString("brand"));
             car.setModel(resultSet.getString("model"));
-            car.setRegistrationNumber(resultSet.getString("registration_number"));
+            car.setRegistrationNumber(resultSet.getString("registrationNumber"));
             return car;
         }
     }
 
-    final String getCar = "SELECT CAR.id, surname, phone_number, brand, model, registration_number FROM CAR " +
-            "JOIN OWNER ON CAR.id_owner=OWNER.id";
+    private static final String getCar = "SELECT id, client, phoneNumber, brand, model, registrationNumber FROM CAR ";
 
     @Override
     public Collection<Car> getAllCars() {
-        // SELECT * FROM table_name
-        final String sql = getCar;
-        List<Car> cars = jdbcTemplate.query(sql, new CarRowMapper());
-        return cars;
+        return jdbcTemplate.query(getCar, new CarRowMapper());
     }
 
     @Override
-    public Car getCarById(int id) {
+    public Optional<Car> getCarById(int id) {
         // SELECT column_name(s) FROM table_name where column = value
         final String sql = getCar + " WHERE CAR.id = ?";
         Car car = jdbcTemplate.queryForObject(sql, new CarRowMapper(), id);
-        return car;
+        return Optional.of(car);
     }
 
     @Override
-    public Collection<Car> getCarByOwnerSurname(String surname) {
+    public Collection<Car> getCarByOwnerSurname(String client) {
         // SELECT column_name(s) FROM table_name where column = value
-        final String sql = getCar + " WHERE OWNER.surname = ?";
-        List<Car> cars = jdbcTemplate.query(sql, new CarRowMapper(), surname);
-        return cars;
+        final String sql = getCar + " WHERE client = ?";
+        return jdbcTemplate.query(sql, new CarRowMapper(), client);
     }
 
     @Override
     public Collection<Car> getCarByOwnerPhoneNumber(String phoneNumber) {
         // SELECT column_name(s) FROM table_name where column = value
-        final String sql = getCar + " WHERE OWNER.phone_number = ?";
-        List<Car> cars = jdbcTemplate.query(sql, new CarRowMapper(), phoneNumber);
-        return cars;
+        final String sql = getCar + " WHERE phoneNumber = ?";
+        return jdbcTemplate.query(sql, new CarRowMapper(), phoneNumber);
     }
 
     @Override
     public Car getCarByRegistrationNumber(String registrationNumber) {
         // SELECT column_name(s) FROM table_name where column = value
-        final String sql = getCar + " WHERE CAR.registration_number = ?";
-        Car car = jdbcTemplate.queryForObject(sql, new CarRowMapper(), registrationNumber);
-        return car;
+        final String sql = getCar + " WHERE CAR.registrationNumber = ?";
+        return jdbcTemplate.queryForObject(sql, new CarRowMapper(), registrationNumber);
     }
 
     public Collection<Car> getCarByBrand(String brand) {
         // SELECT column_name(s) FROM table_name where column = value
         final String sql = getCar + " WHERE brand = ?";
-        List<Car> cars = jdbcTemplate.query(sql, new CarRowMapper(), brand);
-        return cars;
+        return jdbcTemplate.query(sql, new CarRowMapper(), brand);
     }
 
     public Collection<Car> getCarByModel(String model) {
         // SELECT column_name(s) FROM table_name where column = value
         final String sql = getCar + " WHERE model = ?";
-        List<Car> cars = jdbcTemplate.query(sql, new CarRowMapper(), model);
-        return cars;
+        return jdbcTemplate.query(sql, new CarRowMapper(), model);
     }
 
     @Override
     public void deleteCarById(int id) {
         final String sql = "DELETE FROM CAR WHERE id = ?";
-        jdbcTemplate.update(sql,id);
+        jdbcTemplate.update(sql, id);
     }
 
 
     @Override
-    public void updateCarById(Car car,int id) {
-        final String sql = "UPDATE CAR SET id_owner = ?,model=?,brand=?,registration_number=? WHERE id = ?";
-        final int id_owner = car.getId_owner();
+    public void updateCarById(Car car) {
+        final String sql = "UPDATE CAR SET model=?,brand=?,registrationNumber=?,client=?,phoneNumber=? WHERE id = ?";
         final String model = car.getModel();
         final String brand = car.getBrand();
-        final String registration_number = car.getRegistrationNumber();
-        jdbcTemplate.update(sql,new Object[] {id_owner,model,brand,registration_number,id});
+        final int id = car.getId();
+        final String registrationNumber = car.getRegistrationNumber();
+        final String client = car.getClient();
+        final Long phoneNumber = car.getPhoneNumber();
+        LOGGER.info("Car parameters in updateCar method: {}", model);
+        jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber, id});
     }
 
     @Override
     public void insertCarToDb(Car car) {
-        final String sql = "INSERT INTO CAR (id_owner,model,brand,registration_number) VALUES (?,?,?,?)";
-        final int id_owner = car.getId_owner();
+        final String sql = "INSERT INTO CAR (model,brand,registrationNumber,client,phoneNumber) VALUES (?,?,?,?,?)";
         final String model = car.getModel();
         final String brand = car.getBrand();
-        final String registration_number = car.getRegistrationNumber();
-        jdbcTemplate.update(sql,new Object[] {id_owner,model,brand,registration_number});
+        final String registrationNumber = car.getRegistrationNumber();
+        final String client = car.getClient();
+        final Long phoneNumber = car.getPhoneNumber();
+        jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber});
     }
 }

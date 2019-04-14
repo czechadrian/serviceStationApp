@@ -3,13 +3,14 @@ package com.servicecompany.agh.dao;
 import com.servicecompany.agh.car.Car;
 
 import java.util.Collection;
+import java.util.Optional;
 
 
 public interface CarDao {
 
     Collection<Car> getAllCars();
 
-    Car getCarById(int id);
+    Optional<Car> getCarById(int id);
 
     Collection<Car> getCarByOwnerSurname( String surname );
 
@@ -23,7 +24,7 @@ public interface CarDao {
 
     void deleteCarById(int id);
 
-    void updateCarById(Car car,int id);
+    void updateCarById(Car car);
 
     void insertCarToDb(Car car);
 }
