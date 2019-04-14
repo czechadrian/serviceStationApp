@@ -6,11 +6,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 
 @Repository("mysqlEmployee")
 public class MySqlEmployeeImpl implements EmployeeDao {
@@ -40,18 +39,17 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         // SELECT * FROM table_name
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany FROM USER " +
                 "JOIN ROLE ON USER.id_role=ROLE.id";
-        List<AbstractEmployee> abstractEmployees = jdbcTemplate.query(sql, new EmployeeRowMapper());
-        return abstractEmployees;
+
+        return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
 
     @Override
-    public AbstractEmployee getEmployeeById(int id) {
+    public Optional<AbstractEmployee> getEmployeeById(int id) {
         // SELECT column_name(s) FROM table_name where column = value
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
                 "WHERE USER.id = ?";
-        AbstractEmployee abstractEmployee = jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), id);
-        return abstractEmployee;
+        return Optional.of(jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), id));
 
     }
 
@@ -60,8 +58,8 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String sql = "SELECT USER.id,role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
                 "WHERE USER.login = ?";
-        AbstractEmployee abstractEmployee = jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), login);
-        return abstractEmployee;
+
+        return jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), login);
     }
 
     @Override
@@ -70,8 +68,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
                 "WHERE USER.id = 1";
-        List<AbstractEmployee> abstractEmployee = jdbcTemplate.query(sql, new EmployeeRowMapper());
-        return abstractEmployee;
+        return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
 
     @Override
@@ -80,8 +77,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
                 "WHERE USER.id = 2";
-        List<AbstractEmployee> abstractEmployee = jdbcTemplate.query(sql, new EmployeeRowMapper());
-        return abstractEmployee;
+        return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
 
     @Override
@@ -90,8 +86,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
                 "WHERE USER.id = 3";
-        List<AbstractEmployee> abstractEmployee = jdbcTemplate.query(sql, new EmployeeRowMapper());
-        return abstractEmployee;
+        return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
 
     @Override
@@ -100,8 +95,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.id_role=ROLE.id " +
                 "WHERE USER.id = 4";
-        List<AbstractEmployee> abstractEmployee = jdbcTemplate.query(sql, new EmployeeRowMapper());
-        return abstractEmployee;
+        return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
 
     @Override
@@ -117,12 +111,12 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String password = abstractEmployee.getPassword();
         final int experience = abstractEmployee.getExperience();
         final int experienceInCompany = abstractEmployee.getExperienceInCompany();
-        jdbcTemplate.update(sql, new Object[]{ id_role, name, surname, login, password, experience, experienceInCompany});
+        jdbcTemplate.update(sql, new Object[]{id_role, name, surname, login, password, experience, experienceInCompany});
 
     }
 
     @Override
-    public void updateEmployeeById(AbstractEmployee abstractEmployee, int id) {
+    public void updateEmployeeById(AbstractEmployee abstractEmployee) {
         final String sql = "UPDATE USER SET id_role= ?, name = ?,surname= ?, " +
                 "login = ?, password = ?, experience = ?, experienceInCompany = ? WHERE id = ?";
         final int id_role = abstractEmployee.getId_role();
@@ -132,6 +126,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String password = abstractEmployee.getPassword();
         final int experience = abstractEmployee.getExperience();
         final int experienceInCompany = abstractEmployee.getExperienceInCompany();
+        final int id = abstractEmployee.getId();
         jdbcTemplate.update(sql, new Object[]{id_role, name, surname,
                 login, password, experience, experienceInCompany, id});
     }
