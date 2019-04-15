@@ -1,6 +1,8 @@
 package com.servicecompany.agh.dao;
 
 import com.servicecompany.agh.employees.AbstractEmployee;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +16,8 @@ import java.util.Optional;
 @Repository("mysqlEmployee")
 public class MySqlEmployeeImpl implements EmployeeDao {
 
+
+    private final Logger LOGGER = LoggerFactory.getLogger(MySqlEmployeeImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -67,6 +71,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String sql = "SELECT USER.id, role, name, surname, experience, experienceInCompany " +
                 "FROM USER JOIN ROLE ON USER.idRole=ROLE.id " +
                 "WHERE USER.id = 1";
+        LOGGER.info("Get all managers method : {}", jdbcTemplate.query(sql, new EmployeeRowMapper()));
         return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
 
@@ -110,7 +115,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final String password = abstractEmployee.getPassword();
         final int experience = abstractEmployee.getExperience();
         final int experienceInCompany = abstractEmployee.getExperienceInCompany();
-        jdbcTemplate.update(sql, new Object[]{ idRole, name, surname, login, password, experience, experienceInCompany});
+        jdbcTemplate.update(sql, new Object[]{idRole, name, surname, login, password, experience, experienceInCompany});
 
     }
 

@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,8 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -101,22 +99,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http
-//                    .oauth2Login()
-//                    .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-//                    .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                    .and().authorizeRequests()
-//                    .antMatchers("/login").permitAll()
-//                    .antMatchers("/accountant/**").hasRole("ACCOUNTANT")
-//                    .antMatchers("/logistician/**").hasRole("LOGISTICIAN")
-//                    .antMatchers("/manager/**").hasRole("MANAGER")
-//                    .antMatchers("/mechanic/**").hasRole("MECHANIC")
-//                    .antMatchers( "/api/user/**").hasAnyRole("MANAGER","MECHANIC","ACCOUNTANT","LOGISTICIAN");
-//        }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -125,9 +107,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**/*.{js,html,css}").permitAll()
-                .antMatchers("/", "/api/user").permitAll()
+                .antMatchers( "/api/user/**").hasAnyRole("MANAGER","MECHANIC","ACCOUNTANT","LOGISTICIAN")
                 .anyRequest().authenticated();
+
     }
 
 
