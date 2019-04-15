@@ -9,9 +9,9 @@ import lombok.Setter;
 public class Accountant extends AbstractEmployee {
 
     @Builder
-    public Accountant(Integer id, Integer id_role, String role, String name, String surname,
+    public Accountant(Integer id, Integer idRole, String role, String name, String surname,
                       String login, String password, Integer experience, Integer experienceInCompany) {
-        super(id, id_role, role, name, surname, login, password, experience, experienceInCompany);
+        super(id, idRole, role, name, surname, login, password, experience, experienceInCompany);
     }
 
     public Accountant() {
