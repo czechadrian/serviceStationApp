@@ -12,7 +12,7 @@ import lombok.Setter;
 public class AbstractEmployee {
 
     private Integer id;
-    private Integer id_role;
+    private Integer idRole;
     private String role;
     private String name;
     private String surname;
