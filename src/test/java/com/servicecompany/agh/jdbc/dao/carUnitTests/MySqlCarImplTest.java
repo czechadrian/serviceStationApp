@@ -22,13 +22,13 @@ public class MySqlCarImplTest {
     @Autowired
     CarDao carDao;
 
-
     @Test
     public void getAllCars() {
         Collection<Car> listOfCars = carDao.getAllCars();
         System.out.println(listOfCars.toString());
         Assert.assertNotNull(listOfCars);
     }
+
     @Test
     public void getCarById() {
         Car car = new Car(99,"Maciek", 808808808L, "Lanos", "Daewoo", "RJSF520");
@@ -71,6 +71,11 @@ public class MySqlCarImplTest {
 
     @Test
     public void getCarByRegistrationNumber() {
+        Car car = new Car(99,"Maciek", 808808808L, "Lanos", "Daewoo", "RJSF522");
+        carDao.insertCarToDb(car);
+        Car testCar = carDao.getCarByRegistrationNumber("RJSF522");
+        Assert.assertTrue(testCar.getModel().equals("Lanos"));
+        carDao.deleteCarById(testCar.getId());
     }
 
     @Test
