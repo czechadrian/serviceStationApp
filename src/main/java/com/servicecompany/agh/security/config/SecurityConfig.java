@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SimpleSavedRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -59,6 +67,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public RequestCache refererRequestCache() {
+        return new HttpSessionRequestCache() {
+            @Override
+            public void saveRequest(HttpServletRequest request, HttpServletResponse response) {
+                String referrer = request.getHeader("referer");
+                if (referrer != null) {
+                    request.getSession().setAttribute("SPRING_SECURITY_SAVED_REQUEST", new SimpleSavedRequest(referrer));
+                }
+            }
+        };
+    }
+
+    @Bean
     public AccessDeniedHandler accessDeniedHandler(){
         return new CustomAccessDeniedHandler();
     }
@@ -79,20 +100,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
+
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http
+//                    .oauth2Login()
+//                    .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+//                    .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                    .and().authorizeRequests()
+//                    .antMatchers("/login").permitAll()
+//                    .antMatchers("/accountant/**").hasRole("ACCOUNTANT")
+//                    .antMatchers("/logistician/**").hasRole("LOGISTICIAN")
+//                    .antMatchers("/manager/**").hasRole("MANAGER")
+//                    .antMatchers("/mechanic/**").hasRole("MECHANIC")
+//                    .antMatchers( "/api/user/**").hasAnyRole("MANAGER","MECHANIC","ACCOUNTANT","LOGISTICIAN");
+//        }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/accountant/**").hasRole("ACCOUNTANT")
-                .antMatchers("/logistician/**").hasRole("LOGISTICIAN")
-                .antMatchers("/manager/**").hasRole("MANAGER")
-                .antMatchers("/mechanic/**").hasRole("MECHANIC")
-                .antMatchers("/**").hasAnyRole("ACCOUNTANT", "LOGISTICIAN","MANAGER","MECHANIC")
-                .and().formLogin().loginProcessingUrl("/login").successHandler(myAuthenticationSuccessHandler())
-                .and().logout().logoutSuccessUrl("/login").permitAll()
-                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-                .and().csrf().disable();
+        http
+                .formLogin().and()
+                .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
+                .authorizeRequests()
+                .antMatchers("/**/*.{js,html,css}").permitAll()
+                .antMatchers("/", "/api/user").permitAll()
+                .anyRequest().authenticated();
     }
+
+
+
 
 
 }

@@ -9,12 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -23,8 +31,18 @@ public class EmployeeController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
+
     @Autowired
     private EmployeeService employeeService;
+
+
+
+    @GetMapping(value = "/user")
+    public Collection<AbstractEmployee> getAllManagers() {
+        LOGGER.info("Tutaj");
+        return employeeService.getAllManagers();
+    }
+
 
     @GetMapping(value = "/employees")
     Collection<AbstractEmployee> getAllEmployees() {
