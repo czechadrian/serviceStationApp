@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         final String sqlLogin = "SELECT login FROM USER WHERE USER.id=?";
         final String sqlPassword = "SELECT password FROM USER WHERE USER.id=?";
-        final String sqlRole = "SELECT role FROM USER JOIN ROLE ON USER.id_role=ROLE.id WHERE USER.id=?";
+        final String sqlRole = "SELECT role FROM USER JOIN ROLE ON USER.idRole=ROLE.id WHERE USER.id=?";
 
         log.info("searching users in table user");
         for( int i=1; i <= count; i++ ) {
