@@ -23,8 +23,17 @@ public class EmployeeController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
+
     @Autowired
     private EmployeeService employeeService;
+
+
+    @GetMapping(value = "/user")
+    public Collection<AbstractEmployee> getAllManagers() {
+        LOGGER.info("Tutaj");
+        return employeeService.getAllManagers();
+    }
+
 
     @GetMapping(value = "/employees")
     Collection<AbstractEmployee> getAllEmployees() {
