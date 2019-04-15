@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -15,7 +16,7 @@ public class EmployeeService {
     @Qualifier("mysqlEmployee")
     private EmployeeDao employeeDao;
 
-  public void deleteEmployeeById(int id) {
+    public void deleteEmployeeById(int id) {
         this.employeeDao.deleteEmployeeById(id);
     }
 
@@ -24,7 +25,7 @@ public class EmployeeService {
         return this.employeeDao.getAllEmployees();
     }
 
-    public AbstractEmployee getEmployeeById(int id) {
+    public Optional<AbstractEmployee> getEmployeeById(int id) {
         return this.employeeDao.getEmployeeById(id);
     }
 
@@ -49,12 +50,11 @@ public class EmployeeService {
     }
 
     public void insertEmployeeToDb(AbstractEmployee abstractEmployee) {
-      this.employeeDao.insertEmployeeToDb(abstractEmployee);
+        this.employeeDao.insertEmployeeToDb(abstractEmployee);
 
     }
 
-    public void updateEmployeeById(AbstractEmployee abstractEmployee, int id) {
-        this.employeeDao.updateEmployeeById(abstractEmployee,id);
-            }
-
+    public void updateEmployeeById(AbstractEmployee abstractEmployee) {
+        this.employeeDao.updateEmployeeById(abstractEmployee);
+    }
 }

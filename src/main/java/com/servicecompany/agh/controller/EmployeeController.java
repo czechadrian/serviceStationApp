@@ -6,13 +6,19 @@ import com.servicecompany.agh.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api")
 public class EmployeeController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
@@ -20,14 +26,17 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping
-    public Collection<AbstractEmployee> getAllEmployees() {
+    @GetMapping(value = "/employees")
+    Collection<AbstractEmployee> getAllEmployees() {
+        LOGGER.info("Request to get all employees");
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping(value = "/byId/{id}")
-    public AbstractEmployee getEmployeeById(@PathVariable("id") int id) {
-        return employeeService.getEmployeeById(id);
+    @GetMapping(value = "/employee/{id}")
+    ResponseEntity<?> getEmployeeById(@PathVariable("id") int id) {
+        LOGGER.info("Request to get employee with id: {}", id);
+        Optional<AbstractEmployee> employee = employeeService.getEmployeeById(id);
+        return employee.map(response -> ResponseEntity.ok().body(response)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping(value = "/byLogin/{login}")
@@ -35,19 +44,25 @@ public class EmployeeController {
         return employeeService.getEmployeeByLogin(login);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteEmployeeById(@PathVariable("id") int id) {
+    @DeleteMapping(value = "/employee/{id}")
+    ResponseEntity<?> deleteEmployeeById(@PathVariable("id") int id) {
+        LOGGER.info("Request to delete employee: {}", id);
         employeeService.deleteEmployeeById(id);
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateEmployeeById(@RequestBody AbstractEmployee abstractEmployee, @PathVariable("id") int id) {
-        employeeService.updateEmployeeById(abstractEmployee, id);
+    @PutMapping(value = "/employee", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<AbstractEmployee> updateEmployeeById(@RequestBody AbstractEmployee abstractEmployee) {
+        LOGGER.info("Request to update employee: {}", abstractEmployee);
+        employeeService.updateEmployeeById(abstractEmployee);
+        return ResponseEntity.ok().body(abstractEmployee);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertEmployeeToDb(@RequestBody AbstractEmployee abstractEmployee) {
+    @PostMapping(value = "/employee", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<AbstractEmployee> insertEmployeeToDb(@Valid @RequestBody AbstractEmployee abstractEmployee) throws URISyntaxException {
+        LOGGER.info("Request to create employee: {}", abstractEmployee);
         employeeService.insertEmployeeToDb(abstractEmployee);
+        return ResponseEntity.created(new URI("/api/employee" + abstractEmployee.getId())).body(abstractEmployee);
     }
 }
 
