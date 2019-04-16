@@ -1,6 +1,7 @@
 package com.servicecompany.agh.security.config;
 
 import com.servicecompany.agh.authentication.UrlAuthenticationSuccessHandler;
+import com.servicecompany.agh.employees.AbstractEmployee;
 import com.servicecompany.agh.handlers.CustomAccessDeniedHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +26,11 @@ import org.springframework.security.web.savedrequest.SimpleSavedRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity
@@ -38,29 +45,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JdbcTemplate jdbcTemplate;
 
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        final String sqlCount = "SELECT COUNT(*) FROM USER";
-        int count = jdbcTemplate.queryForObject(sqlCount, new Object[] {}, Integer.class);
+        class UsersRowMapper implements RowMapper<AbstractEmployee> {
+            @Override
+            public AbstractEmployee mapRow(ResultSet resultSet, int i) throws SQLException {
+                AbstractEmployee abstractEmployee = new AbstractEmployee();
+                abstractEmployee.setLogin(resultSet.getString("login"));
+                abstractEmployee.setPassword(resultSet.getString("password"));
+                abstractEmployee.setRole(resultSet.getString("role"));
+                return abstractEmployee;
+            }
+        }
 
-        final String sqlLogin = "SELECT login FROM USER WHERE USER.id=?";
-        final String sqlPassword = "SELECT password FROM USER WHERE USER.id=?";
-        final String sqlRole = "SELECT role FROM USER JOIN ROLE ON USER.idRole=ROLE.id WHERE USER.id=?";
+        final String sql = "SELECT login, password, role FROM USER " +
+                "JOIN ROLE ON USER.idRole=ROLE.id";
 
         log.info("searching users in table user");
-        for( int i=1; i <= count; i++ ) {
+        List<AbstractEmployee> abstractEmployees = new ArrayList<AbstractEmployee>
+                (jdbcTemplate.query(sql, new UsersRowMapper()));
 
-            String login = jdbcTemplate.queryForObject(sqlLogin, new Object[] {i}, String.class);
-            String password = jdbcTemplate.queryForObject(sqlPassword, new Object[] {i}, String.class);
-            String role = jdbcTemplate.queryForObject(sqlRole, new Object[] {i}, String.class).toUpperCase();
-
+        for( AbstractEmployee a : abstractEmployees ) {
+            String login = a.getLogin();
+            String password = a.getPassword();
+            String role = a.getRole().toUpperCase();
 
             auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)
                     .withUser(login).password(passwordEncoder.encode(password)).roles(role);
         }
-
 
     }
 
