@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="124.625" y="211.0">com.servicecompany.agh.dao.CarDao</node>
+    <node x="0.0" y="312.0">com.servicecompany.agh.service.CarService</node>
+    <node x="170.0" y="290.0">com.servicecompany.agh.dao.MySqlCarImpl</node>
+    <node x="152.80555555555557" y="435.0">com.servicecompany.agh.controller.CarController</node>
+    <node x="165.0" y="0.0">com.servicecompany.agh.car.Car</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.servicecompany.agh.dao.MySqlCarImpl" target="com.servicecompany.agh.dao.CarDao">
+      <point x="-54.75" y="-47.5" />
+      <point x="224.75" y="265.0" />
+      <point x="190.625" y="265.0" />
+      <point x="22.0" y="14.5" />
+    </edge>
+    <edge source="com.servicecompany.agh.service.CarService" target="com.servicecompany.agh.dao.CarDao">
+      <point x="37.5" y="-25.5" />
+      <point x="112.5" y="265.0" />
+      <point x="146.625" y="265.0" />
+      <point x="-22.0" y="14.5" />
+    </edge>
+    <edge source="com.servicecompany.agh.dao.MySqlCarImpl" target="com.servicecompany.agh.car.Car">
+      <point x="54.75" y="-47.5" />
+      <point x="334.25" y="265.0" />
+      <point x="301.30555555555554" y="265.0" />
+      <point x="301.30555555555554" y="191.0" />
+      <point x="294.375" y="191.0" />
+      <point x="25.875" y="80.5" />
+    </edge>
+    <edge source="com.servicecompany.agh.controller.CarController" target="com.servicecompany.agh.service.CarService">
+      <point x="-45.0" y="-36.5" />
+      <point x="197.80555555555557" y="410.0" />
+      <point x="75.0" y="410.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.servicecompany.agh.controller.CarController" target="com.servicecompany.agh.car.Car">
+      <point x="45.0" y="-36.5" />
+      <point x="287.80555555555554" y="410.0" />
+      <point x="399.5" y="410.0" />
+      <point x="399.5" y="191.0" />
+      <point x="346.125" y="191.0" />
+      <point x="77.625" y="80.5" />
+    </edge>
+    <edge source="com.servicecompany.agh.service.CarService" target="com.servicecompany.agh.car.Car">
+      <point x="-37.5" y="-25.5" />
+      <point x="37.5" y="265.0" />
+      <point x="58.94444444444443" y="265.0" />
+      <point x="58.94444444444443" y="181.0" />
+      <point x="190.875" y="181.0" />
+      <point x="-77.625" y="80.5" />
+    </edge>
+    <edge source="com.servicecompany.agh.dao.CarDao" target="com.servicecompany.agh.car.Car">
+      <point x="0.0" y="-14.5" />
+      <point x="168.625" y="191.0" />
+      <point x="242.625" y="191.0" />
+      <point x="-25.875" y="80.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9090909090909091" x="543.0" y="340.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
