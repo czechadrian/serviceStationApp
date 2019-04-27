@@ -15,12 +15,13 @@ public class Car {
     @Id
     @GeneratedValue
     private Integer id;
+    private String damage;
+    private String amendments;
     @NonNull
     private String client;
     private Long phoneNumber;
     private String model;
     private String brand;
     private String registrationNumber;
-//    private List<String> flawsHistory;
 
 }

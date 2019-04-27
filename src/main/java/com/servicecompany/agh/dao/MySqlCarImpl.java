@@ -32,11 +32,13 @@ public class MySqlCarImpl implements CarDao {
             car.setBrand(resultSet.getString("brand"));
             car.setModel(resultSet.getString("model"));
             car.setRegistrationNumber(resultSet.getString("registrationNumber"));
+            car.setDamage(resultSet.getString("damage"));
+            car.setAmendments(resultSet.getString("amendments"));
             return car;
         }
     }
 
-    private static final String getCar = "SELECT id, client, phoneNumber, brand, model, registrationNumber FROM CAR ";
+    private static final String getCar = "SELECT id, client, phoneNumber, brand, model, registrationNumber,damage,amendments FROM CAR ";
 
     @Override
     public Collection<Car> getAllCars() {
@@ -93,25 +95,29 @@ public class MySqlCarImpl implements CarDao {
 
     @Override
     public void updateCarById(Car car) {
-        final String sql = "UPDATE CAR SET model=?,brand=?,registrationNumber=?,client=?,phoneNumber=? WHERE id = ?";
+        final String sql = "UPDATE CAR SET model=?,brand=?,registrationNumber=?,client=?,phoneNumber=?,damage=? ,amendments=? WHERE id = ?";
         final String model = car.getModel();
         final String brand = car.getBrand();
         final int id = car.getId();
         final String registrationNumber = car.getRegistrationNumber();
         final String client = car.getClient();
         final Long phoneNumber = car.getPhoneNumber();
+        final String amendments = car.getAmendments();
+        final String damage = car.getDamage();
         LOGGER.info("Car parameters in updateCar method: {}", model);
-        jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber, id});
+        jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber, damage, amendments, id});
     }
 
     @Override
     public void insertCarToDb(Car car) {
-        final String sql = "INSERT INTO CAR (model,brand,registrationNumber,client,phoneNumber) VALUES (?,?,?,?,?)";
+        final String sql = "INSERT INTO CAR (model,brand,registrationNumber,client,phoneNumber,damage,amendments) VALUES (?,?,?,?,?,?,?)";
         final String model = car.getModel();
         final String brand = car.getBrand();
         final String registrationNumber = car.getRegistrationNumber();
         final String client = car.getClient();
         final Long phoneNumber = car.getPhoneNumber();
-        jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber});
+        final String amendments = car.getAmendments();
+        final String damage = car.getDamage();
+        jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber, damage, amendments});
     }
 }
