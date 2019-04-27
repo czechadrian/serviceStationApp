@@ -19,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SimpleSavedRequest;
@@ -63,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "JOIN ROLE ON USER.idRole=ROLE.id";
 
         log.info("searching users in table user");
-        List<AbstractEmployee> abstractEmployees = new ArrayList<AbstractEmployee>
+        List<AbstractEmployee> abstractEmployees = new ArrayList<>
                 (jdbcTemplate.query(sql, new UsersRowMapper()));
 
         for( AbstractEmployee a : abstractEmployees ) {
@@ -116,9 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin().and()
-                .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers( "/api/user/**").hasAnyRole("MANAGER","MECHANIC","ACCOUNTANT","LOGISTICIAN")
                 .anyRequest().authenticated();
