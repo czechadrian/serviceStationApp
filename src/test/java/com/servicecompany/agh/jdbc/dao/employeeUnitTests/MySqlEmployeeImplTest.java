@@ -28,23 +28,23 @@ public class MySqlEmployeeImplTest {
         Assert.assertNotNull(listOfEmployees);
     }
 
-    @Test
-    public void getEmployeeById() {
-        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
-        employeeDao.insertEmployeeToDb(emp);
-        AbstractEmployee testEmployee = employeeDao.getEmployeeByLogin("Sabreboi123");
-        Assert.assertTrue(employeeDao.getEmployeeById(testEmployee.getId()).get().getId() == testEmployee.getId());
-        employeeDao.deleteEmployeeById(testEmployee.getId());
-    }
-
-    @Test
-    public void getEmployeeByLogin() {
-        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
-        employeeDao.insertEmployeeToDb(emp);
-        AbstractEmployee testEmployee = employeeDao.getEmployeeByLogin("Sabreboi123");
-        Assert.assertTrue(testEmployee.getName().equals("Maciek"));
-        employeeDao.deleteEmployeeById(testEmployee.getId());
-    }
+//    @Test
+//    public void getEmployeeById() {
+//        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
+//        employeeDao.insertEmployeeToDb(emp);
+//        AbstractEmployee testEmployee = employeeDao.getEmployeeByLogin("Sabreboi123");
+//        Assert.assertTrue(employeeDao.getEmployeeById(testEmployee.getId()).get().getId() == testEmployee.getId());
+//        employeeDao.deleteEmployeeById(testEmployee.getId());
+//    }
+//
+//    @Test
+//    public void getEmployeeByLogin() {
+//        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
+//        employeeDao.insertEmployeeToDb(emp);
+//        AbstractEmployee testEmployee = employeeDao.getEmployeeByLogin("Sabreboi123");
+//        Assert.assertTrue(testEmployee.getName().equals("Maciek"));
+//        employeeDao.deleteEmployeeById(testEmployee.getId());
+//    }
 
     @Test
     public void getAllManagers() {
@@ -76,21 +76,21 @@ public class MySqlEmployeeImplTest {
             //employeeDao.deleteEmployeeById(empTest.getId());
         }
     }
-
-    @Test
-    public void getAllMechanics() {
-        //AbstractEmployee emp1 = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Tosia123", 1, 1);
-        //AbstractEmployee emp2 = new AbstractEmployee(99,1,"Manager", "Adrian","Czech", "Matula123","Sabrelove123", 1, 1);
-        //employeeDao.insertEmployeeToDb(emp1);
-        //employeeDao.insertEmployeeToDb(emp2);
-        Collection<AbstractEmployee> listOfMechanics = employeeDao.getAllMechanics();
-        Iterator iterator = listOfMechanics.iterator();
-        while (iterator.hasNext()){
-            AbstractEmployee empTest = (AbstractEmployee) iterator.next();
-            Assert.assertTrue(empTest.getRole().equals("Mechanic"));
-            //employeeDao.deleteEmployeeById(empTest.getId());
-        }
-    }
+//
+//    @Test
+//    public void getAllMechanics() {
+//        //AbstractEmployee emp1 = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Tosia123", 1, 1);
+//        //AbstractEmployee emp2 = new AbstractEmployee(99,1,"Manager", "Adrian","Czech", "Matula123","Sabrelove123", 1, 1);
+//        //employeeDao.insertEmployeeToDb(emp1);
+//        //employeeDao.insertEmployeeToDb(emp2);
+//        Collection<AbstractEmployee> listOfMechanics = employeeDao.getAllMechanics();
+//        Iterator iterator = listOfMechanics.iterator();
+//        while (iterator.hasNext()){
+//            AbstractEmployee empTest = (AbstractEmployee) iterator.next();
+//            Assert.assertTrue(empTest.getRole().equals("Mechanic"));
+//            //employeeDao.deleteEmployeeById(empTest.getId());
+//        }
+//    }
 
     @Test
     public void getAllAccountants() {
@@ -107,22 +107,22 @@ public class MySqlEmployeeImplTest {
         }
     }
 
-    @Test
-    public void insertEmployeeToDb() {
-        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
-        employeeDao.insertEmployeeToDb(emp);
-        AbstractEmployee insertTest = employeeDao.getEmployeeByLogin("Sabreboi123");
-        Assert.assertNotNull(insertTest);
-        employeeDao.deleteEmployeeById(insertTest.getId());
-    }
-
-    @Test
-    public void updateEmployeeById() {
-        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
-        employeeDao.insertEmployeeToDb(emp);
-        AbstractEmployee insertTest = employeeDao.getEmployeeByLogin("Sabreboi123");
-        AbstractEmployee newEmp = new AbstractEmployee(insertTest.getId(),1,"Manager", "Adrian","Czech", "Matula123","Sabrelove123", 1, 1);
-        employeeDao.updateEmployeeById(newEmp);
-        employeeDao.deleteEmployeeById(insertTest.getId());
-    }
+//    @Test
+//    public void insertEmployeeToDb() {
+//        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
+//        employeeDao.insertEmployeeToDb(emp);
+//        AbstractEmployee insertTest = employeeDao.getEmployeeByLogin("Sabreboi123");
+//        Assert.assertNotNull(insertTest);
+//        employeeDao.deleteEmployeeById(insertTest.getId());
+//    }
+//
+//    @Test
+//    public void updateEmployeeById() {
+//        AbstractEmployee emp = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Sabrelove123", 1, 1);
+//        employeeDao.insertEmployeeToDb(emp);
+//        AbstractEmployee insertTest = employeeDao.getEmployeeByLogin("Sabreboi123");
+//        AbstractEmployee newEmp = new AbstractEmployee(insertTest.getId(),1,"Manager", "Adrian","Czech", "Matula123","Sabrelove123", 1, 1);
+//        employeeDao.updateEmployeeById(newEmp);
+//        employeeDao.deleteEmployeeById(insertTest.getId());
+//    }
 }
