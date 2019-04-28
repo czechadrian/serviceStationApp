@@ -131,6 +131,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
         final int experience = abstractEmployee.getExperience();
         final int experienceInCompany = abstractEmployee.getExperienceInCompany();
         final int id = abstractEmployee.getId();
+        LOGGER.info("idRole: {}", idRole);
         jdbcTemplate.update(sql, new Object[]{idRole, name, surname,
                 login, password, experience, experienceInCompany, id});
     }

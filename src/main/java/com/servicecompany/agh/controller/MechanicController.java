@@ -14,7 +14,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/mechanic")
+@RequestMapping("/api")
 
 public class MechanicController {
 
@@ -25,8 +25,9 @@ public class MechanicController {
     private EmployeeService employeeService;
 
 
-    @GetMapping
+    @GetMapping(value = "/employees/mechanics")
     public Collection<AbstractEmployee> getAllMechanics() {
+        LOGGER.info("Request to get all mechanics");
         return employeeService.getAllMechanics();
     }
 

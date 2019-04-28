@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("/api")
 public class ManagerController {
 
 
@@ -22,9 +21,9 @@ public class ManagerController {
     @Autowired
     private EmployeeService employeeService;
 
-
-    @GetMapping
+    @GetMapping(value = "/employees/managers")
     public Collection<AbstractEmployee> getAllManagers() {
+        LOGGER.info("Request to get all managers");
         return employeeService.getAllManagers();
     }
 }

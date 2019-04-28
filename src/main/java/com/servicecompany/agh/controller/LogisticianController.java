@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/logistician")
+@RequestMapping("/api")
 public class LogisticianController {
 
 
@@ -23,8 +22,9 @@ public class LogisticianController {
     private EmployeeService employeeService;
 
 
-    @GetMapping
+    @GetMapping(value = "/employees/logisticians")
     public Collection<AbstractEmployee> getAllLogisticians() {
+        LOGGER.info("Request to get all logisticians");
         return employeeService.getAllLogisticians();
     }
 
