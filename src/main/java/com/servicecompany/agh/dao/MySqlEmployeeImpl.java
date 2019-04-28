@@ -45,7 +45,6 @@ public class MySqlEmployeeImpl implements EmployeeDao {
                 "JOIN ROLE ON USER.idRole=ROLE.id";
         return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
-
     @Override
     public Optional<AbstractEmployee> getEmployeeById(int id) {
         // SELECT column_name(s) FROM table_name where column = value

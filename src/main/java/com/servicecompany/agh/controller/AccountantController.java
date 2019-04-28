@@ -25,7 +25,7 @@ public class AccountantController {
 
     @GetMapping(value = "/employees/accountants")
     Collection<AbstractEmployee> getAllAccountants() {
-        LOGGER.info("Request to get all accountants");
+        LOGGER.info("Request to get all accountants {}", employeeService.getAllAccountants());
         return employeeService.getAllAccountants();
     }
 }
