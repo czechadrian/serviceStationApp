@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -39,6 +40,11 @@ public class EmployeeController {
     Collection<AbstractEmployee> getAllEmployees() {
         LOGGER.info("Request to get all employees");
         return employeeService.getAllEmployees();
+    }
+
+    @GetMapping(value = "/login")
+    public AbstractEmployee currentUserName(Principal principal) {
+        return employeeService.getEmployeeByLogin(principal.getName());
     }
 
     @GetMapping(value = "/employee/{id}")
