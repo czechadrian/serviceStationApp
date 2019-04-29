@@ -15,6 +15,8 @@ public class Car {
     @Id
     @GeneratedValue
     private Integer id;
+    private String damage;
+    private String amendments;
     @NonNull
     private String client;
     private Long phoneNumber;
