@@ -62,20 +62,20 @@ public class MySqlEmployeeImplTest {
 
     }
 
-    @Test
-    public void getAllLogisticians() {
-        //AbstractEmployee emp1 = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Tosia123", 1, 1);
-        //AbstractEmployee emp2 = new AbstractEmployee(99,1,"Manager", "Adrian","Czech", "Matula123","Sabrelove123", 1, 1);
-        //employeeDao.insertEmployeeToDb(emp1);
-        //employeeDao.insertEmployeeToDb(emp2);
-        Collection<AbstractEmployee> listOfLogisticians = employeeDao.getAllLogisticians();
-        Iterator iterator = listOfLogisticians.iterator();
-        while (iterator.hasNext()){
-            AbstractEmployee empTest = (AbstractEmployee) iterator.next();
-            Assert.assertTrue(empTest.getRole().equals("Logistician"));
-            //employeeDao.deleteEmployeeById(empTest.getId());
-        }
-    }
+//    @Test
+//    public void getAllLogisticians() {
+//        //AbstractEmployee emp1 = new AbstractEmployee(99,1,"Manager", "Maciek","Pomaranski", "Sabreboi123","Tosia123", 1, 1);
+//        //AbstractEmployee emp2 = new AbstractEmployee(99,1,"Manager", "Adrian","Czech", "Matula123","Sabrelove123", 1, 1);
+//        //employeeDao.insertEmployeeToDb(emp1);
+//        //employeeDao.insertEmployeeToDb(emp2);
+//        Collection<AbstractEmployee> listOfLogisticians = employeeDao.getAllLogisticians();
+//        Iterator iterator = listOfLogisticians.iterator();
+//        while (iterator.hasNext()){
+//            AbstractEmployee empTest = (AbstractEmployee) iterator.next();
+//            Assert.assertTrue(empTest.getRole().equals("Logistician"));
+//            //employeeDao.deleteEmployeeById(empTest.getId());
+//        }
+//    }
 //
 //    @Test
 //    public void getAllMechanics() {
