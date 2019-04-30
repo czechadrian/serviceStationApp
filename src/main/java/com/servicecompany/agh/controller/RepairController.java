@@ -40,7 +40,12 @@ public class RepairController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping(value = "/repair/{nameUser}")
+    @GetMapping(value = "/repair/byNumberCar/{numberCar}")
+    public Optional<Repair> getRepairByNumberCar(@PathVariable("numberCar") String numberCar) {
+        return repairService.getRepairByNumberCar(numberCar);
+    }
+
+    @GetMapping(value = "/repair/byNameUser/{nameUser}")
     public Optional<Repair> getRepairByNameUser(@PathVariable("nameUser") String nameUser) {
         return repairService.getRepairByNameUser(nameUser);
     }
