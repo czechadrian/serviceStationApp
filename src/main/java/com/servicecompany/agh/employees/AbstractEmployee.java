@@ -17,7 +17,7 @@ public class AbstractEmployee {
     @GeneratedValue
     private Integer id;
     private Integer idRole;
-    private String role;
+    private String setRole;
     private String name;
     private String surname;
     private String login;

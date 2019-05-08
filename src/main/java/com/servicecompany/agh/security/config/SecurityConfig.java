@@ -53,13 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 AbstractEmployee abstractEmployee = new AbstractEmployee();
                 abstractEmployee.setLogin(resultSet.getString("login"));
                 abstractEmployee.setPassword(resultSet.getString("password"));
-                abstractEmployee.setRole(resultSet.getString("role"));
+                abstractEmployee.setSetRole(resultSet.getString("setRole"));
                 return abstractEmployee;
             }
         }
 
-        final String sql = "SELECT login, password, role FROM USER " +
-                "JOIN ROLE ON USER.idRole=ROLE.id";
+        final String sql = "SELECT login, password, setRole FROM USER " +
+                "JOIN ROLE ON USER.setRole=ROLE.role";
 
         log.info("searching users in table user");
         List<AbstractEmployee> abstractEmployees = new ArrayList<>
@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         for( AbstractEmployee a : abstractEmployees ) {
             String login = a.getLogin();
             String password = a.getPassword();
-            String role = a.getRole().toUpperCase();
+            String role = a.getSetRole().toUpperCase();
 
             auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)
                     .withUser(login).password(passwordEncoder.encode(password)).roles(role);
