@@ -26,7 +26,7 @@ class EmployeeRowMapperTest extends Specification {
     def setupResultSet() {
         def resultSet = Mock(ResultSet)
         resultSet.getInt("id") >> EMPLOYEE_ID
-        resultSet.getString("role") >> EMPLOYEE_ROLE
+        resultSet.getString("setRole") >> EMPLOYEE_ROLE
         resultSet.getString("name") >> EMPLOYEE_NAME
         resultSet.getString("surname") >> EMPLOYEE_SURNAME
         resultSet.getInt("experience") >> EMPLOYEE_EXPERIENCE
@@ -38,7 +38,7 @@ class EmployeeRowMapperTest extends Specification {
     def verifyResult(employeeEntity) {
 
         assert employeeEntity.getId() == EMPLOYEE_ID
-        assert employeeEntity.getRole() == EMPLOYEE_ROLE
+        assert employeeEntity.getSetRole() == EMPLOYEE_ROLE
         assert employeeEntity.getName() == EMPLOYEE_NAME
         assert employeeEntity.getSurname() == EMPLOYEE_SURNAME
         assert employeeEntity.getExperience() == EMPLOYEE_EXPERIENCE
