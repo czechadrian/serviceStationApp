@@ -56,7 +56,7 @@ public class MySqlEmployeeImplTest {
         Iterator iterator = listOfManagers.iterator();
         while (iterator.hasNext()){
             AbstractEmployee empTest = (AbstractEmployee) iterator.next();
-            Assert.assertTrue(empTest.getRole().equals("Manager"));
+            Assert.assertTrue(empTest.getSetRole().equals("Manager"));
             //employeeDao.deleteEmployeeById(empTest.getId());
         }
 
@@ -102,7 +102,7 @@ public class MySqlEmployeeImplTest {
         Iterator iterator = listOfAccountants.iterator();
         while (iterator.hasNext()){
             AbstractEmployee empTest = (AbstractEmployee) iterator.next();
-            Assert.assertTrue(empTest.getRole().equals("Accountant"));
+            Assert.assertTrue(empTest.getSetRole().equals("Accountant"));
             //employeeDao.deleteEmployeeById(empTest.getId());
         }
     }
