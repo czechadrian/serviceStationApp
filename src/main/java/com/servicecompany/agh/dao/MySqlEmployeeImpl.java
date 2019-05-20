@@ -96,7 +96,7 @@ public class MySqlEmployeeImpl implements EmployeeDao {
     public Collection<AbstractEmployee> getAllAccountants() {
         // SELECT all info about Accountants
         final String sql = "SELECT USER.id, setRole, name, surname, experience, experienceInCompany " +
-                "FROM USER JOIN ROLE ONUSER.setRole=ROLE.role " +
+                "FROM USER JOIN ROLE ON USER.setRole=ROLE.role " +
                 "WHERE USER.setRole = \"Accountant\"";
         return jdbcTemplate.query(sql, new EmployeeRowMapper());
     }
