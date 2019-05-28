@@ -37,6 +37,8 @@ public class MySqlCarImpl implements CarDao {
     }
 
     private static final String getCar = "SELECT id, client, phoneNumber, brand, model, registrationNumber FROM CAR ";
+    private static final String historyEntry = "INSERT INTO HISTORY (date, time, description, type) " +
+            "VALUES ( CURRENT_DATE(), CURRENT_TIME(), ";
 
     @Override
     public Collection<Car> getAllCars() {
@@ -102,6 +104,8 @@ public class MySqlCarImpl implements CarDao {
         final Long phoneNumber = car.getPhoneNumber();
         LOGGER.info("Car parameters in updateCar method: {}", model);
         jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber, id});
+        final String description = historyEntry+"\"Car: " + brand + ", " + model + ", " + registrationNumber + ", " + client + ", " + phoneNumber + "\"" + ", \"Update\")";
+        jdbcTemplate.update(description);
     }
 
     @Override
@@ -114,5 +118,7 @@ public class MySqlCarImpl implements CarDao {
         final Long phoneNumber = car.getPhoneNumber();
 
         jdbcTemplate.update(sql, new Object[]{model, brand, registrationNumber, client, phoneNumber});
+        final String description = historyEntry+"\"Car: " + brand + ", " + model + ", " + registrationNumber + ", " + client + ", " + phoneNumber + "\"" + ", \"Add\")";
+        jdbcTemplate.update(description);
     }
 }
